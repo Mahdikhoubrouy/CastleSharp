@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CastleWindsor.Core.Exceptions
+namespace CastleSharp.Core.Exceptions
 {
-    public class NotFoundCustomConditionException : Exception
+    internal class NullMethodException : Exception
     {
-        public NotFoundCustomConditionException()
+        public NullMethodException()
         {
         }
     }

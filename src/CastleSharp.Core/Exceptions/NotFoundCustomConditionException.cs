@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CastleWindsor.Core.Exceptions
+namespace CastleSharp.Core.Exceptions
 {
-    internal class NotFoundResponseException : Exception
+    public class NotFoundCustomConditionException : Exception
     {
-        public NotFoundResponseException()
+        public NotFoundCustomConditionException()
         {
         }
     }

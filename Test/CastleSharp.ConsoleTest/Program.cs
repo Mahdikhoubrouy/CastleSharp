@@ -4,7 +4,7 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using CastleWindsor.Core;
+using CastleSharp.Core;
 using System.Reflection;
 
 internal class Program

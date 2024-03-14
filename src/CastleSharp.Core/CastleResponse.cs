@@ -1,4 +1,4 @@
-﻿namespace CastleWindsor.Core
+﻿namespace CastleSharp.Core
 {
     public class CastleResponse
     {

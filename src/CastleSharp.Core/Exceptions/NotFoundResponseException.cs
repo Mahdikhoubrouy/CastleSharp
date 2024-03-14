@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CastleWindsor.Core.Exceptions
+namespace CastleSharp.Core.Exceptions
 {
-    internal class NullMethodException : Exception
+    internal class NotFoundResponseException : Exception
     {
-        public NullMethodException()
+        public NotFoundResponseException()
         {
         }
     }

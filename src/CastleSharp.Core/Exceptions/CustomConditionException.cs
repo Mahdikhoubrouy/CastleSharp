@@ -1,4 +1,4 @@
-﻿namespace CastleWindsor.Core.Exceptions
+﻿namespace CastleSharp.Core.Exceptions
 {
     public class CustomConditionException : Exception
     {

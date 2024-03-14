@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CastleWindsor.Core.Exceptions
+namespace CastleSharp.Core.Exceptions
 {
     internal class NotFoundMethodException : Exception
     {

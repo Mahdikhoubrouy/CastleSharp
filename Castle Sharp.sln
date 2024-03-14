@@ -5,11 +5,11 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4702B8F1-9233-4308-8D25-46C48DD474F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CastleWindsor.Core", "src\CastleWindsor.Core\CastleWindsor.Core.csproj", "{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CastleSharp.Core", "src\CastleSharp.Core\CastleSharp.Core.csproj", "{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{D4114671-BD41-48F0-A6AB-11707F33D995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CastleWindsor.ConsoleTest", "Test\CastleWindsor.ConsoleTest\CastleWindsor.ConsoleTest.csproj", "{ABF11C0A-76E6-47A6-A9C0-A95491901312}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CastleSharp.ConsoleTest", "Test\CastleSharp.ConsoleTest\CastleSharp.ConsoleTest.csproj", "{ABF11C0A-76E6-47A6-A9C0-A95491901312}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
