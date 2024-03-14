@@ -4,13 +4,13 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using CastleSharp.Core;
 using System.Reflection;
+using CastleSharp.Core;
 
 internal class Program
 {
     private static ITelegramBotClient botClient = new TelegramBotClient("5964759264:AAEz1hSF2znzlED20UcJjel0Q5ZGwdTx8zg");
-    private static TelegramCastleWindsor castleWindsor = new TelegramCastleWindsor().Configure(botClient, Assembly.GetExecutingAssembly());
+    private static TelegramCastleSharp castleWindsor = new TelegramCastleSharp().Configure(botClient, Assembly.GetExecutingAssembly());
 
     private static async Task Main(string[] args)
     {
@@ -53,8 +53,6 @@ internal class Program
 
             if (response.IsSuccess)
                 return;
-
-
 
             var chatId = message.Chat.Id;
 
