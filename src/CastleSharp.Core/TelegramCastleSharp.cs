@@ -16,7 +16,12 @@ namespace CastleSharp.Core
         #endregion
 
         #region Init
-
+        /// <summary>
+        /// Configuration CastleSharp
+        /// </summary>
+        /// <param name="botclient">The telegram bot client</param>
+        /// <param name="assembly">The assembly of your project</param>
+        /// <returns></returns>
         public TelegramCastleSharp Configure(ITelegramBotClient botclient, Assembly assembly)
         {
             _assembly = assembly;
@@ -55,6 +60,13 @@ namespace CastleSharp.Core
 
         #region Command
 
+        /// <summary>
+        /// Start for handling available methods (Just Text Messages)
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomConditionException"></exception>
+        /// <exception cref="NotFoundCustomConditionException"></exception>
         public Task<CastleResponse> HandleCommandAsync(Message message)
         {
             var methods = FindMethodByType<CommandAttribute>();
@@ -109,6 +121,13 @@ namespace CastleSharp.Core
 
         #region Callback Query
 
+        /// <summary>
+        /// Start for handling available methods (Just CallBack Queries)
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomConditionException"></exception>
+        /// <exception cref="NotFoundCustomConditionException"></exception>
         public Task<CastleResponse> HandleCallBackQueryAsync(CallbackQuery callback)
         {
             var methods = FindMethodByType<CallBackQueryAttribute>();
