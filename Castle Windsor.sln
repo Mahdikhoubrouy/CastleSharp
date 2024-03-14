@@ -5,7 +5,11 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4702B8F1-9233-4308-8D25-46C48DD474F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CastleWindsor.Core", "src\CastleWindsor.Core\CastleWindsor.Core.csproj", "{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CastleWindsor.Core", "src\CastleWindsor.Core\CastleWindsor.Core.csproj", "{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{D4114671-BD41-48F0-A6AB-11707F33D995}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CastleWindsor.ConsoleTest", "Test\CastleWindsor.ConsoleTest\CastleWindsor.ConsoleTest.csproj", "{ABF11C0A-76E6-47A6-A9C0-A95491901312}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,17 @@ Global
 		{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF11C0A-76E6-47A6-A9C0-A95491901312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF11C0A-76E6-47A6-A9C0-A95491901312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF11C0A-76E6-47A6-A9C0-A95491901312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF11C0A-76E6-47A6-A9C0-A95491901312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C53DC4B8-247B-49FD-B9A3-58B0C6D25CC4} = {4702B8F1-9233-4308-8D25-46C48DD474F8}
+		{ABF11C0A-76E6-47A6-A9C0-A95491901312} = {D4114671-BD41-48F0-A6AB-11707F33D995}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0922A0AA-6CA5-42E6-BF70-523A8B41E5A6}
