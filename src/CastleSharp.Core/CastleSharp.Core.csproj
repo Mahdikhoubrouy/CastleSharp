@@ -16,6 +16,7 @@
     <Authors>CastleSharp</Authors>
     <Product>CastleSharp</Product>
     <Description>a tool for telegram.bor</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
