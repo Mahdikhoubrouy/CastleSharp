@@ -4,12 +4,14 @@
 CastleSharp is a C# library for building modular and scalable Telegram bots using Aspect-Oriented Programming (AOP) principles. This README provides step-by-step instructions on how to use CastleSharp, with detailed examples to get you started quickly.
 
 ## Table of Contents
-1. [How to Use](#how-to-use)
-2. [Usage](#usage)
-3. [Command with Static Text](#command-with-static-text)
-4. [Examples](#examples)
-5. [Advanced Usage](#advanced-usage)
-6. [Handling Callbacks and Commands](#handling-callbacks-and-commands)
+1. [Setup](#Installation)
+2. [Getting Started](#getting-started)
+3. [How to Use](#how-to-use)
+4. [Usage](#usage)
+5. [Command with Static Text](#command-with-static-text)
+6. [Examples](#examples)
+7. [Advanced Usage](#advanced-usage)
+8. [Handling Callbacks and Commands](#handling-callbacks-and-commands)
 
 ## Features
 
