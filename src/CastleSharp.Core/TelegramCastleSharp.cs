@@ -1,54 +1,62 @@
 ﻿using CastleSharp.Core.Attributes;
 using CastleSharp.Core.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using Telegram.Bot;
+using System.Text;
+using System.Threading.Tasks;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
+using Telegram.Bot;
 
 namespace CastleSharp.Core
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TelegramCastleSharp
     {
         #region Fields
 
         private Assembly _assembly;
         private ITelegramBotClient _telegramBotClient;
+        private List<MethodInfo> _methods;
 
         #endregion
 
         #region Init
         /// <summary>
-        /// Configuration CastleSharp
+        /// Configures CastleSharp with the Telegram bot client and the assembly to search for command methods.
         /// </summary>
-        /// <param name="botclient">The telegram bot client</param>
+        /// <param name="botClient">The telegram bot client</param>
         /// <param name="assembly">The assembly of your project</param>
         /// <returns></returns>
-        public TelegramCastleSharp Configure(ITelegramBotClient botclient, Assembly assembly)
+        public TelegramCastleSharp Configure(ITelegramBotClient botClient, Assembly assembly)
         {
             _assembly = assembly;
-            _telegramBotClient = botclient;
+            _telegramBotClient = botClient;
+            _methods = GetMethods();
             return this;
         }
 
         #endregion
 
-        #region Helper Methods
+        #region Method Helpers
 
-        private List<MethodInfo> FindMethodByType<Tmethod>()
+
+        private List<MethodInfo> GetMethods()
         {
-            var methods = _assembly.GetTypes()
-                           .SelectMany(t => t.GetMethods())
-                           .Where(m => m.GetCustomAttributes(typeof(Tmethod), false).Length > 0)
-                           .ToList();
-            return methods;
+            return _assembly.GetTypes()
+                .SelectMany(t => t.GetMethods())
+                .ToList();
         }
 
         private List<MethodInfo> FindConditionByName(string name)
         {
-            var conditions = _assembly.GetTypes()
-                           .SelectMany(t => t.GetMethods())
-                           .Where(m => m.Name == name)
-                           .ToList();
-            return conditions;
+            return _methods
+                    .Where(m => m.Name == name)
+                        .ToList();
         }
 
         private void InvokeMethod<TInvokeData>(MethodInfo method, Attribute attribute, ITelegramBotClient botClient, TInvokeData invokeData)
@@ -60,124 +68,80 @@ namespace CastleSharp.Core
 
         #region Command
 
-        /// <summary>
-        /// Start for handling available methods (Just Text Messages)
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="CustomConditionException"></exception>
-        /// <exception cref="NotFoundCustomConditionException"></exception>
-        public Task<CastleResponse> HandleCommandAsync(Message message)
+        private Task<CastleResponse> HandleAsync<TAttribute>(Update update, string StaticCommandTextPropertyName, string ConditionPropertyName)
+    where TAttribute : CommandBase
         {
-            var methods = FindMethodByType<CommandAttribute>();
-
-            foreach (var method in methods)
+            foreach (var method in _methods)
             {
-                if (method is null)
-                    continue;
+                if (method == null) continue;
 
-                var attribute = method.GetCustomAttribute(typeof(CommandAttribute), false);
-
-                if (attribute is null)
-                    continue;
+                var attribute = method.GetCustomAttribute(typeof(TAttribute), false);
+                if (attribute == null) continue;
 
                 var methodType = attribute.GetType();
-                object? value = methodType.GetProperty("CommandText")!.GetValue(attribute);
-                object? conditionName = methodType.GetProperty("ConditionName")!.GetValue(attribute);
 
-                if (!string.IsNullOrWhiteSpace(conditionName?.ToString()))
+                string? staticCommand = methodType.GetProperty(StaticCommandTextPropertyName)?.GetValue(attribute)?.ToString();
+                string? conditionName = methodType.GetProperty(ConditionPropertyName)?.GetValue(attribute)?.ToString();
+
+                object? passValueToMethod = update.Type switch
                 {
-                    var condtion = FindConditionByName(conditionName!.ToString()!);
+                    UpdateType.Message => update.Message,
+                    UpdateType.CallbackQuery => update.CallbackQuery,
+                    _ => update
+                };
 
-                    if (condtion.Count > 1)
-                        throw new CustomConditionException("The number of found conditions is more than one");
-                    if (condtion.Count < 1)
-                        throw new NotFoundCustomConditionException();
 
-                    var customCondition = condtion.First();
-                    var result = (bool)customCondition.Invoke(customCondition, [message])!;
+                if (conditionName != null && !string.IsNullOrWhiteSpace(conditionName))
+                {
+                    var conditionMethods = FindConditionByName(conditionName);
 
-                    if (result)
+                    if (conditionMethods.Count != 1)
                     {
-                        InvokeMethod(method, attribute, _telegramBotClient, message);
-                        return Task.FromResult(CastleResponse.Success());
+                        throw conditionMethods.Count > 1
+                            ? new CustomConditionException("Multiple conditions found with the same name.")
+                            : new NotFoundCustomConditionException();
                     }
+
+                    var condition = conditionMethods.First();
+                    var result = (bool)condition.Invoke(new object(), [passValueToMethod])!;
+                    if (!result) continue;
+
+                    InvokeMethod(method, attribute, _telegramBotClient, passValueToMethod);
+                    return Task.FromResult(CastleResponse.Success());
                 }
 
-                if (value is null)
+                if (staticCommand == null)
                     continue;
 
-                if (value.ToString() != message.Text)
+                if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != staticCommand)
                     continue;
 
-                InvokeMethod(method, attribute, _telegramBotClient, message);
+                if (update.Type == UpdateType.Message && update.Message?.Text != staticCommand)
+                    continue;
+
+
+                InvokeMethod(method, attribute, _telegramBotClient, passValueToMethod);
                 return Task.FromResult(CastleResponse.Success());
             }
 
             return Task.FromResult(CastleResponse.Failed());
         }
 
-        #endregion
-
-        #region Callback Query
 
         /// <summary>
-        /// Start for handling available methods (Just CallBack Queries)
+        /// Handles commands.
         /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
+        /// <param name="update">The update object from telegram</param>
+        /// <returns>CastleResponse</returns>
         /// <exception cref="CustomConditionException"></exception>
         /// <exception cref="NotFoundCustomConditionException"></exception>
-        public Task<CastleResponse> HandleCallBackQueryAsync(CallbackQuery callback)
+        public Task<CastleResponse> HandleCommandsAsync(Update update)
         {
-            var methods = FindMethodByType<CallBackQueryAttribute>();
-
-            foreach (var method in methods)
-            {
-                if (method is null)
-                    continue;
-
-                var attribute = method.GetCustomAttribute(typeof(CallBackQueryAttribute), false);
-
-                if (attribute is null)
-                    continue;
-
-                var methodType = attribute.GetType();
-                object? value = methodType.GetProperty("CallBackQueryText")!.GetValue(attribute);
-                object? conditionName = methodType.GetProperty("ConditionName")!.GetValue(attribute);
-
-                if (!string.IsNullOrWhiteSpace(conditionName?.ToString()))
-                {
-                    var condtion = FindConditionByName(conditionName!.ToString()!);
-
-                    if (condtion.Count > 1)
-                        throw new CustomConditionException("The number of found conditions is more than one");
-                    if (condtion.Count < 1)
-                        throw new NotFoundCustomConditionException();
-
-                    var customCondition = condtion.First();
-                    var result = (bool)customCondition.Invoke(customCondition, [callback])!;
-
-                    if (result)
-                    {
-                        InvokeMethod(method, attribute, _telegramBotClient, callback);
-                        return Task.FromResult(CastleResponse.Success());
-                    }
-                }
-
-                if (value is null)
-                    continue;
-
-                if (value.ToString() != callback.Data)
-                    continue;
-
-                InvokeMethod(method, attribute, _telegramBotClient, callback);
-                return Task.FromResult(CastleResponse.Success());
-            }
-
-            return Task.FromResult(CastleResponse.Failed());
+            return HandleAsync<CommandAttribute>(update, "Command", "ConditionName");
         }
 
         #endregion
+
     }
+
 }

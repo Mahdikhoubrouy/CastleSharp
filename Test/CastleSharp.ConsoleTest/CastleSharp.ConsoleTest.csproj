@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\CastleSharp.Core\CastleSharp.Core.csproj" />
-    <ProjectReference Include="..\..\src\CastleWindsor.Core\CastleSharp.Core.csproj" />
   </ItemGroup>
 
 </Project>
