@@ -33,11 +33,9 @@ To start using CastleSharp, ensure you meet the prerequisites and follow the ins
 
 ### Setup Instructions
 
-**Clone the Repository**  
-   Start by cloning the CastleSharp repository to your local machine:
+**Install Package**  
    ```bash
-   git clone https://github.com/Mahdikhoubrouy/CastleSharp.git
-   cd CastleSharp
+dotnet add package CastleSharp --version 2.0.0
    ```
 
 
