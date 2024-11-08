@@ -5,28 +5,27 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageIcon>Designer.jpeg</PackageIcon>
+    <PackageIcon></PackageIcon>
     <RepositoryUrl>https://github.com/Mahdikhoubrouy/CastleSharp</RepositoryUrl>
     <PackageTags>TelegramBot,Telegram,Bot,TelegramTools,Tools,CastleSharp</PackageTags>
-    <FileVersion>1.0.0</FileVersion>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+	<Version>2.0.0</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <Title>CastleSharp</Title>
     <PackageId>CastleSharp</PackageId>
     <Authors>CastleSharp</Authors>
     <Product>CastleSharp</Product>
-    <Description>a tool for telegram.bor</Description>
+    <Description>a tool for telegram.bot </Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="C:\Users\Lion\Downloads\Designer.jpeg">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <PackageReference Include="Telegram.Bot" Version="[19.*,)" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Telegram.Bot" Version="19.0.0" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

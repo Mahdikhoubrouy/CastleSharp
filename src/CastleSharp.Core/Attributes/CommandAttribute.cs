@@ -1,17 +1,11 @@
 ﻿namespace CastleSharp.Core.Attributes
 {
+    /// <summary>
+    /// Command
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
-    public class CommandAttribute : Attribute
+    public class CommandAttribute : CommandBase
     {
-        /// <summary>
-        /// message section of text check || for example : message.Text == CommandText
-        /// </summary>
-        /// 
-        public string CommandText { get; set; }
 
-        /// <summary>
-        /// The name of your custom condition 
-        /// </summary>
-        public string ConditionName { get; set; }
     }
 }

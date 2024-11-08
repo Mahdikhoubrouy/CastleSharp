@@ -7,9 +7,10 @@ using Telegram.Bot.Types.Enums;
 using System.Reflection;
 using CastleSharp.Core;
 
-internal class Program
+public class Program
 {
     private static ITelegramBotClient botClient = new TelegramBotClient("5964759264:AAEz1hSF2znzlED20UcJjel0Q5ZGwdTx8zg");
+
     private static TelegramCastleSharp castleWindsor = new TelegramCastleSharp().Configure(botClient, Assembly.GetExecutingAssembly());
 
     private static async Task Main(string[] args)
@@ -49,7 +50,7 @@ internal class Program
                 return;
 
 
-            var response = await castleWindsor.HandleCommandAsync(message);
+            var response = await castleWindsor.HandleCommandsAsync(update);
 
             if (response.IsSuccess)
                 return;

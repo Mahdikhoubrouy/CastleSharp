@@ -19,7 +19,7 @@ namespace CastleSharp.ConsoleTest
         }
 
 
-        [Command(CommandText = "Ping")]
+        [Command(Command = "Ping")]
         public static async Task Ping(ITelegramBotClient botClient, Message message)
         {
             await botClient.SendTextMessageAsync(message.Chat.Id, "Pong Baby ✅", replyToMessageId: message.MessageId);
