@@ -139,7 +139,7 @@ namespace CastleSharp.ConsoleTest
         }
 
 
-        [Command(CommandText = "Ping")]
+        [Command(Command = "Ping")]
         public static async Task Ping(ITelegramBotClient botClient, Message message)
         {
             await botClient.SendTextMessageAsync(message.Chat.Id, "Pong ✅", replyToMessageId: message.MessageId);
@@ -168,7 +168,7 @@ CastleSharp uses attributes to define commands and manage bot behavior. Each bot
 A static text command triggers when the bot receives an exact message. For example, a command to respond to “/start”:
 
 ```csharp
-[Command(CommandText = "start")]
+[Command(Command = "start")]
 public static async Task StartCommand(ITelegramBotClient botClient, Message message)
 {
     await botClient.SendTextMessageAsync(message.Chat.Id, "Welcome to CastleSharp Bot! 🏰", replyToMessageId: message.MessageId);
@@ -201,7 +201,7 @@ A conditional command triggers only if the message content matches a custom cond
 A static text command that responds to “Ping”:
 
 ```csharp
-[Command(CommandText = "Ping")]
+[Command(Command = "Ping")]
 public static async Task PingCommand(ITelegramBotClient botClient, Message message)
 {
     await botClient.SendTextMessageAsync(message.Chat.Id, "Pong 🏓", replyToMessageId: message.MessageId);
@@ -213,7 +213,7 @@ public static async Task PingCommand(ITelegramBotClient botClient, Message messa
 To handle errors within commands, wrap the main logic in a try-catch block:
 
 ```csharp
-[Command(CommandText = "errorTest")]
+[Command(Command = "errorTest")]
 public static async Task ErrorTestCommand(ITelegramBotClient botClient, Message message)
 {
     try
@@ -252,7 +252,7 @@ public static async Task MultipleKeywordsCommand(ITelegramBotClient botClient, M
 Commands with delayed responses add interactivity:
 
 ```csharp
-[Command(CommandText = "wait")]
+[Command(Command = "wait")]
 public static async Task WaitCommand(ITelegramBotClient botClient, Message message)
 {
     await botClient.SendTextMessageAsync(message.Chat.Id, "Please wait... ⏳", replyToMessageId: message.MessageId);
