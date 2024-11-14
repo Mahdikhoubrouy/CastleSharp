@@ -1,7 +1,7 @@
 
 # CastleSharp Telegram Bot 🏰
 
-[![Downloads](https://img.shields.io/nuget/dt/Telegram.Bot.svg?style=flat-square&label=Package%20Downloads)](https://www.nuget.org/packages/CastleSharp/)
+![NuGet Downloads](https://img.shields.io/nuget/dt/CastleSharp)
 
 
 CastleSharp is a C# library for building modular and scalable Telegram bots using Aspect-Oriented Programming (AOP) principles. This README provides step-by-step instructions on how to use CastleSharp, with detailed examples to get you started quickly.
