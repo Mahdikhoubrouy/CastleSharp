@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>Add Filter Attribute</PackageReleaseNotes>
     <Title>CastleSharp</Title>
     <PackageId>CastleSharp</PackageId>
-    <Authors>CastleSharp</Authors>
+    <Authors>Mahdi Khoubrouy</Authors>
     <Product>CastleSharp</Product>
     <Description>a tool for telegram.bot </Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
