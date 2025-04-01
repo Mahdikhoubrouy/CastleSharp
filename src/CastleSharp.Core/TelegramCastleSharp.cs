@@ -75,6 +75,8 @@ namespace CastleSharp.Core
             {
                 if (method == null) continue;
 
+                if (CheckFilter(method, update)) continue;
+
                 var attribute = method.GetCustomAttribute(typeof(TAttribute), false);
                 if (attribute == null) continue;
 
@@ -142,6 +144,66 @@ namespace CastleSharp.Core
 
         #endregion
 
+
+
+        #region Castle Filter
+
+        /// <summary>
+        /// Check Castle Filter
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="update"></param>
+        /// <returns></returns>
+        public bool CheckFilter(MethodInfo method, Update update)
+        {
+            var methodAttribute = method.GetCustomAttribute<CastleFilterAttribute>();
+            var classAttribute = method.DeclaringType?.GetCustomAttribute<CastleFilterAttribute>();
+
+            long chatId = update.Type switch
+            {
+                UpdateType.Message => update.Message!.Chat.Id,
+                UpdateType.CallbackQuery => update.CallbackQuery!.Message!.Chat.Id,
+                _ => 0
+            };
+
+            bool IsChatFiltered(CastleFilterAttribute? attr)
+            {
+                return attr?.Chats?.Length > 0 && !attr.Chats.Contains(chatId);
+            }
+
+            bool IsUpdateConditionFiltered(CastleFilterAttribute? attr)
+            {
+                if (attr?.ConditionName == null)
+                    return false;
+
+                var declaringType = method.DeclaringType;
+                if (declaringType == null) return false;
+
+                // Look for instance or static method with the given name
+                var conditionMethod = declaringType.GetMethod(attr.ConditionName,
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+
+                if (conditionMethod == null)
+                    throw new MissingMethodException($"Condition method '{attr.ConditionName}' not found in '{declaringType.Name}'.");
+
+                object? instance = null;
+
+                if (!conditionMethod.IsStatic)
+                {
+                    instance = Activator.CreateInstance(declaringType);
+                }
+
+                var result = conditionMethod.Invoke(instance, new object[] { update });
+
+                return result is bool b && !b;
+            }
+
+            return
+                IsChatFiltered(methodAttribute) || IsChatFiltered(classAttribute) ||
+                IsUpdateConditionFiltered(methodAttribute) || IsUpdateConditionFiltered(classAttribute);
+        }
+
+        #endregion
     }
 
 }

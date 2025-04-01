@@ -9,7 +9,7 @@ using CastleSharp.Core;
 
 public class Program
 {
-    private static ITelegramBotClient botClient = new TelegramBotClient("5964759264:AAEz1hSF2znzlED20UcJjel0Q5ZGwdTx8zg");
+    private static ITelegramBotClient botClient = new TelegramBotClient("....");
 
     private static TelegramCastleSharp castleWindsor = new TelegramCastleSharp().Configure(botClient, Assembly.GetExecutingAssembly());
 
