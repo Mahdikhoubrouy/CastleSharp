@@ -8,9 +8,9 @@
     <PackageIcon></PackageIcon>
     <RepositoryUrl>https://github.com/Mahdikhoubrouy/CastleSharp</RepositoryUrl>
     <PackageTags>TelegramBot,Telegram,Bot,TelegramTools,Tools,CastleSharp</PackageTags>
-    <FileVersion>3.0.0</FileVersion>
-    <AssemblyVersion>3.0.0</AssemblyVersion>
-	<Version>3.0.0</Version>
+    <FileVersion>3.1.0</FileVersion>
+    <AssemblyVersion>3.1.0</AssemblyVersion>
+	<Version>3.1.0</Version>
     <PackageReleaseNotes>Add Filter Attribute</PackageReleaseNotes>
     <Title>CastleSharp</Title>
     <PackageId>CastleSharp</PackageId>
