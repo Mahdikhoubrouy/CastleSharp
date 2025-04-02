@@ -179,12 +179,14 @@ namespace CastleSharp.Core
                 var declaringType = method.DeclaringType;
                 if (declaringType == null) return false;
 
-                // Look for instance or static method with the given name
-                var conditionMethod = declaringType.GetMethod(attr.ConditionName,
-                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                var conditionMethod = _methods
+                    .FirstOrDefault(m => m.Name == attr.ConditionName &&
+                        m.GetParameters().Length == 1 &&
+                        m.GetParameters()[0].ParameterType == typeof(Update) &&
+                        m.ReturnType == typeof(bool));
 
                 if (conditionMethod == null)
-                    throw new MissingMethodException($"Condition method '{attr.ConditionName}' not found in '{declaringType.Name}'.");
+                    throw new MissingMethodException($"Condition method '{attr.ConditionName}' not found.");
 
                 object? instance = null;
 

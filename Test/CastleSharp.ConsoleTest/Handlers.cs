@@ -18,9 +18,8 @@ namespace CastleSharp.ConsoleTest
             await botClient.SendTextMessageAsync(message.Chat.Id, "Hi ✅", replyToMessageId: message.MessageId);
         }
 
-        public static bool PingFilterd(Update update) => update.Message.Chat.Username.ToLower() == "sir_miti";
 
-        [CastleFilter(ConditionName = nameof(PingFilterd))]
+        [CastleFilter(ConditionName = nameof(ConditionTest.))]
         [Command(Command = "Ping")]
         public static async Task Ping(ITelegramBotClient botClient, Message message)
         {
